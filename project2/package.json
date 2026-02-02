@@ -1,0 +1,19 @@
+{
+  "name": "student-management-api",
+  "version": "1.0.0",
+  "description": "Simple Student Management API using Express and file storage",
+  "main": "api.js",
+  "scripts": {
+    "start": "node api.js",
+    "dev": "nodemon api.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": ["express", "api", "student", "crud"],
+  "author": "",
+  "license": "ISC"
+}
