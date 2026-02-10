@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint / Issue Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Complaint / Issue Tracker</h1>
+            <div class="nav-buttons">
+                <button class="nav-btn active">User Portal</button>
+                <button class="nav-btn" onclick="window.location.href='/admin'">Admin Panel</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="form-section">
+                <h2>Submit a Complaint</h2>
+                <p class="subtitle">Fill out the form below to submit your complaint. You will receive a tracking ID.</p>
+                
+                <form id="complaintForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name <span class="required">*</span></label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject <span class="required">*</span></label>
+                        <input type="text" id="subject" name="subject" placeholder="Brief summary of your complaint" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description <span class="required">*</span></label>
+                        <textarea id="description" name="description" placeholder="Provide detailed information about your complaint..." rows="6" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Complaint</button>
+                </form>
+
+                <div class="info-box">
+                    <h3>What happens next?</h3>
+                    <ul>
+                        <li>You will receive an auto-generated complaint ID</li>
+                        <li>Your complaint status will be set to "Pending"</li>
+                        <li>An admin will review and update the status</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Complaint Submitted Successfully!</h2>
+            <p>Your complaint ID is: <strong id="complaintId"></strong></p>
+            <p>Please save this ID for tracking your complaint status.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
