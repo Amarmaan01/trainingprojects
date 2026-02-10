@@ -8,10 +8,14 @@
     "start": "node server.js",
     "dev": "node --watch server.js"
   },
-  "keywords": ["express", "rest-api", "complaints"],
+  "keywords": [
+    "express",
+    "rest-api",
+    "complaints"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.22.1"
   }
 }

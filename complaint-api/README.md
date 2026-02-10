@@ -63,3 +63,88 @@ Content-Type: application/json
   }
 }
 ```
+
+### Protected Routes (Require Authentication)
+
+These routes require an `Authorization` header with the value `Bearer valid-token`
+
+#### Resolve Complaint
+```http
+PUT /complaints/:id/resolve
+Authorization: Bearer valid-token
+```
+
+**Success Response:**
+```json
+{
+  "success": true,
+  "message": "Complaint resolved successfully",
+  "data": {
+    "id": 1,
+    "title": "Server Issue",
+    "description": "Server is not responding",
+    "status": "resolved"
+  }
+}
+```
+
+**Error Responses:**
+```json
+// Complaint not found (404)
+{
+  "success": false,
+  "message": "Complaint with id 1 not found"
+}
+
+// Already resolved (400)
+{
+  "success": false,
+  "message": "Complaint is already resolved"
+}
+
+{
+  "success": false,
+  "message": "Authorization header missing"
+}
+```
+
+#### Delete Complaint
+```http
+DELETE /complaints/:id
+Authorization: Bearer valid-token
+```
+
+**Success Response:**
+```json
+{
+  "success": true,
+  "message": "Complaint deleted successfully",
+  "data": {
+    "id": 1,
+    "title": "Server Issue",
+    "description": "Server is not responding",
+    "status": "open"
+  }
+}
+```
+
+**Error Responses:**
+```json
+// Complaint not found (404)
+{
+  "success": false,
+  "message": "Complaint with id 1 not found"
+}
+
+// Unauthorized (401)
+{
+  "success": false,
+  "message": "Authorization header missing"
+}
+
+// Invalid token (403)
+{
+  "success": false,
+  "message": "Invalid authorization token"
+}
+```
