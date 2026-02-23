@@ -1,0 +1,385 @@
+Build a full-stack MERN Anonymous Confession Wall with Google OAuth 2.0 authentication.
+
+TECH STACK:
+- MongoDB + Mongoose
+- Express.js
+- Node.js
+- React frontend
+- Passport Google OAuth 2.0
+- node-cron for expiry
+- bcrypt for secret code hashing
+- sentiment npm package for sentiment analysis
+
+BASE FEATURES (MANDATORY):
+1. User must login with Google before posting.
+2. User can post anonymous confession.
+3. User must enter secret code (minimum 4 characters).
+4. Display all confessions on homepage.
+5. Each confession has reactions: Like, Love, Laugh.
+6. User can edit confession only after correct secret code verification.
+7. User can delete confession only after correct secret code verification.
+
+REQUIRED API ROUTES:
+- POST /confessions
+- GET /confessions
+- PUT /confessions/:id (verify secret code)
+- DELETE /confessions/:id (verify secret code)
+- POST /confessions/:id/react
+- POST /confessions/:id/reply
+- GET replies with confessions
+
+DATABASE SCHEMA:
+
+Confession:
+- text (String, required)
+- secretCode (String, hashed using bcrypt)
+- reactions (Object: like, love, laugh counts)
+- createdAt (Date)
+- userId (Google account ID)
+- expiryDate (Date, optional)
+- sentiment (String: Sad | Angry | Romantic | Funny | Regret | Neutral)
+
+Reply:
+- confessionId (ObjectId ref Confession)
+- text (String)
+- secretCode (hashed)
+- createdAt (Date)
+
+ADVANCED FEATURES:
+
+1) CONFESSION EXPIRY MODE:
+- User selects: Permanent / 24 hours / 7 days.
+- Backend calculates expiryDate.
+- Auto-delete expired confessions using node-cron.
+- Expired confessions must not appear in GET results.
+
+2) ANONYMOUS REPLY THREADS:
+- Replies require secret code.
+- Display replies under confession.
+- Replies stored in separate collection.
+
+3) SORTING OPTIONS (SERVER SIDE):
+Support query parameter:
+- ?sort=latest → sort by createdAt descending
+- ?sort=mostLoved → sort by love count descending
+- ?sort=trending
+
+Trending formula:
+Trending Score = (like*1 + love*2 + laugh*1.5) / (hoursSincePosted + 1)
+
+Compute dynamically.
+
+4) SENTIMENT ANALYSIS:
+- Use “sentiment” npm package.
+- Analyze confession text before saving.
+- Map score:
+  score < -3 → Sad
+  -3 to -1 → Regret
+  0 → Neutral
+  1 to 3 → Romantic
+  >3 → Funny
+- Store sentiment string in database.
+- Display sentiment badge on confession card.
+
+SECURITY:
+- Hash secret codes with bcrypt.
+- Validate secret code before update/delete.
+- Protect routes with Passport authentication middleware.
+- Sanitize user input.
+
+UI REQUIREMENTS:
+- Clean modern card layout.
+- Sentiment badge on each confession.
+- Reaction buttons with live counts.
+- Sorting dropdown (Latest | Most Loved | Trending).
+- Expiry selection in confession form.
+- Modal popup for secret code during edit/delete.
+- Google Login button on homepage.
+- Optional dark mode toggle.
+
+OUTPUT:
+- Provide complete backend and frontend folder structure.
+- Provide package.json files.
+- Provide .env example.
+- Provide full working code.
+- Provide setup instructions to run locally.
+
+Generate complete production-ready working project.
+
+
+Build a production-grade, enterprise-level FULL STACK MERN application:
+
+PROJECT NAME: Anonymous Confession Wall
+
+This must be a scalable, secure, modern, startup-quality application.
+Do NOT generate low-level student CRUD code.
+Follow clean architecture and best industry practices.
+
+========================================
+TECH STACK
+========================================
+
+BACKEND:
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- Passport.js with Google OAuth 2.0
+- JWT or secure session strategy
+- bcrypt (secret code hashing)
+- sentiment (text analysis)
+- node-cron (expiry job)
+- express-validator
+- helmet
+- rate limiter
+- Morgan logger
+- dotenv
+- CORS properly configured
+
+FRONTEND:
+- React (Vite)
+- Tailwind CSS
+- Framer Motion (animations)
+- Lucide React icons
+- Fully responsive (mobile-first)
+- Dark mode default with toggle
+
+========================================
+ARCHITECTURE REQUIREMENTS
+========================================
+
+Use modular, scalable folder structure.
+
+Backend structure:
+
+/src
+  /config
+  /controllers
+  /models
+  /routes
+  /middlewares
+  /services
+  /utils
+  /jobs
+  app.js
+  server.js
+
+Frontend structure:
+
+/src
+  /components
+  /pages
+  /hooks
+  /context
+  /utils
+  App.jsx
+  main.jsx
+
+Clean separation of concerns.
+Service layer abstraction.
+Centralized error handling.
+Environment-based configs.
+Production-ready.
+
+========================================
+CORE FEATURES
+========================================
+
+1) GOOGLE OAUTH AUTHENTICATION
+- Secure Google OAuth 2.0
+- Store Google userId
+- Protect confession routes
+- Secure session or JWT
+- Proper logout handling
+
+2) CONFESSION MODEL
+
+Fields:
+- text (String, required, sanitized)
+- secretCode (bcrypt hashed)
+- reactions: { like, love, laugh }
+- createdAt (Date)
+- userId (Google ID)
+- expiryDate (Date optional)
+- sentiment (Sad | Regret | Neutral | Romantic | Funny)
+
+Indexes on:
+- createdAt
+- expiryDate
+- reactions.love
+
+3) REPLY MODEL
+
+Fields:
+- confessionId (ObjectId ref)
+- text
+- secretCode (hashed)
+- createdAt
+
+Index confessionId.
+
+========================================
+API ROUTES
+========================================
+
+AUTH:
+- GET /auth/google
+- GET /auth/google/callback
+- GET /auth/logout
+
+CONFESSIONS:
+- POST /api/confessions
+- GET /api/confessions?sort=latest|mostLoved|trending
+- PUT /api/confessions/:id
+- DELETE /api/confessions/:id
+- POST /api/confessions/:id/react
+- POST /api/confessions/:id/reply
+- GET /api/confessions/:id/replies
+
+========================================
+BUSINESS LOGIC
+========================================
+
+SECRET CODE:
+- Minimum 4 characters
+- Hash before saving
+- Compare on edit/delete
+- Return proper error if invalid
+
+SENTIMENT ANALYSIS:
+Use sentiment package.
+Map score:
+< -3 → Sad
+-3 to -1 → Regret
+0 → Neutral
+1 to 3 → Romantic
+> 3 → Funny
+Store sentiment in DB.
+Display badge in UI.
+
+SORTING:
+latest → createdAt desc
+mostLoved → reactions.love desc
+trending →
+
+Trending formula:
+(like*1 + love*2 + laugh*1.5) / (hoursSincePosted + 1)
+
+Compute dynamically in service layer.
+
+EXPIRY MODE:
+User selects:
+- Permanent
+- 24 hours
+- 7 days
+
+Calculate expiryDate.
+Use node-cron job every hour to delete expired confessions.
+Exclude expired records from GET results.
+
+REACTION SYSTEM:
+- Atomic increment using $inc
+- Optional anti-spam rate limit
+
+========================================
+UI REQUIREMENTS (PREMIUM DESIGN)
+========================================
+
+STYLE:
+- Modern SaaS-level UI
+- Glassmorphism
+- Soft shadows
+- Elegant gradients
+- Clean typography
+- High contrast accessible colors
+- Smooth micro-interactions
+
+SECTIONS:
+
+NAVBAR:
+- Logo
+- Google Login button
+- Dark/Light toggle
+- Sticky blur background
+
+HERO:
+- Bold headline
+- Tagline
+- CTA button
+- Animated gradient background
+
+CONFESSION FORM MODAL:
+- Auto-resize textarea
+- Secret code input with strength meter
+- Expiry dropdown
+- Animated submit button
+
+SORT BAR:
+- Latest
+- Most Loved
+- Trending
+- Pill-style selector with animation
+
+CONFESSION CARD:
+- Clean text layout
+- Sentiment badge
+- Time posted
+- Reaction icons with animated hover
+- Reaction count animation
+- Reply toggle
+- Edit/Delete icons
+- Glass effect
+- Hover lift animation
+
+REPLY THREAD:
+- Collapsible
+- Nested reply cards
+- Clean indentation
+
+SECRET CODE MODAL:
+- Minimal popup
+- Error styling
+- Smooth transition
+
+UX POLISH:
+- Skeleton loading
+- Toast notifications
+- Smooth scroll
+- Accessible focus states
+- Perfect mobile responsiveness
+
+========================================
+SECURITY & PERFORMANCE
+========================================
+
+- Helmet headers
+- Rate limiting
+- Input sanitization
+- Proper HTTP status codes
+- Standard JSON response format:
+  {
+    success: boolean,
+    message: string,
+    data: object
+  }
+- Lean queries
+- Async/await
+- Logging middleware
+- Production-ready environment config
+
+========================================
+DELIVERABLES
+========================================
+
+- Complete backend code
+- Complete frontend code
+- package.json files
+- .env.example files
+- Setup instructions
+- Folder structure
+- Deployment-ready configuration
+- Clean, maintainable, scalable code
+
+Generate full working enterprise-level project.
+Not a basic assignment.
+Not minimal code.
+Production-ready startup-quality build.
